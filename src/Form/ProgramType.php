@@ -3,11 +3,14 @@
 namespace App\Form;
 
 use App\Entity\Program;
+use App\Entity\Season;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\EntityType;
+
 
 
 class ProgramType extends AbstractType
@@ -21,7 +24,8 @@ class ProgramType extends AbstractType
             ->add('synopsis', TextareaType::class)
             ->add('poster', TextType::class)
             ->add('country',  TextType::class)
-            ->add('year', TextType::class);
+            ->add('year', TextType::class)
+            ->add('program',  null, ['choice_label' => 'title']);
     }
 
     public function configureOptions(OptionsResolver $resolver)

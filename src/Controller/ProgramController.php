@@ -2,13 +2,18 @@
 // src/Controller/ProgramController.php
 namespace App\Controller;
 
+use App\Entity\Category;
+
 use App\Entity\Episode;
 use App\Entity\Program;
-use App\Entity\Season;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ProgramType;
+
+use App\Entity\Season;
+use App\Repository\ProgramRepository;
+
 
 
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,7 +41,7 @@ class ProgramController extends AbstractController
     /**
      * @Route("/new", name="new")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Program $program, ProgramRepository $ProgramRepository): Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
@@ -50,6 +55,7 @@ class ProgramController extends AbstractController
         // Render the form
         return $this->render('program/new.html.twig', ["form" => $form->createView()]);
     }
+
 
     /**
      * @Route ("/{id}", requirements={"id"="\d+"}, methods={"GET"}, name="show")
@@ -65,6 +71,28 @@ class ProgramController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("{id}/edit", name="edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, Program $program): Response
+    {
+        $program = new Program();
+        $form = $this->createForm(ProgramType::class, $program);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($program);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('program');
+        }
+
+        return $this->render('program/edith.html.twig', [
+            'program' => $program,
+            'form' => $form->createView(),
+        ]);
+    }
     /**
      * @Route ("/{program_id}/seasons/{season_id}", name="season_show")
      * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program_id": "id"}})
