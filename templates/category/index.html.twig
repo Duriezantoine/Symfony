@@ -16,7 +16,7 @@
 
 			<h2>{{ loop.index }}
 				/
-																																																												            	- Catégorie :
+																																																																								            	- Catégorie :
 				{{ categorys.name }}</h2>
 
 
@@ -28,10 +28,12 @@
 	{% else %}
 
 		Aucune série trouvée.
+		<a href="{{ path('app_index') }}">Retour à l'accueil</a>
+
 
 	{% endfor %}
 
 
-	Retour à l'accueil
+	<a href="{{ path('category_new') }}">Ajouter une categorie</a>
 
-</a>{% endblock %}
+	Retour à l'accueil</a>{% endblock %}
