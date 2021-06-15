@@ -24,8 +24,7 @@ class ProgramType extends AbstractType
             ->add('synopsis', TextareaType::class)
             ->add('poster', TextType::class)
             ->add('country',  TextType::class)
-            ->add('year', TextType::class)
-            ->add('program',  null, ['choice_label' => 'title']);
+            ->add('year', TextType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -14,10 +14,13 @@
 		</div>
 		{% for season in seasons %}
 			<div>
-				<a href="{{ path('program_season_show', { program_id : program.id, season_id : season.id }) }}">
+				<a href="{{ path('program_season_show', { program_id: program.id, season_id: season.id}) }}">
 					Saison
 					{{ season.number }}:
 					{{ season.year }}</a>
+				<a href="{{ path('season_new') }}">
+					<h3>Ajouter une saison</h3>
+				</a>
 			</div>
 		{% else %}
 			Aucune saison trouvée
@@ -26,10 +29,4 @@
 	<a href="{{ path('program_index') }}">
 		Retour à la liste des programmes
 	</a>
-
-	<a href="{{ path('program_edit', { id:program.id } )}}">
-		Modifier les programes
-	</a>
-
-
 {% endblock %}
