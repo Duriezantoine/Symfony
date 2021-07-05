@@ -63,9 +63,16 @@ class Program
      */
     private $season;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Actor::class, mappedBy="programs")
+
+     */
+    private $firstname;
+
     public function __construct()
     {
         $this->season = new ArrayCollection();
+        $this->firstname = new ArrayCollection();
     }
 
 
@@ -172,6 +179,33 @@ class Program
             if ($season->getProgram() === $this) {
                 $season->setProgram(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Actor[]
+     */
+    public function getFirstname(): Collection
+    {
+        return $this->firstname;
+    }
+
+    public function addFirstname(Actor $firstname): self
+    {
+        if (!$this->firstname->contains($firstname)) {
+            $this->firstname[] = $firstname;
+            $firstname->addProgram($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFirstname(Actor $firstname): self
+    {
+        if ($this->firstname->removeElement($firstname)) {
+            $firstname->removeProgram($this);
         }
 
         return $this;
